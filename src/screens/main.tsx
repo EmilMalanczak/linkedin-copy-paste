@@ -1,38 +1,49 @@
-import { ActionIcon, Button, Group, Stack, Text } from "@mantine/core"
+import { ActionIcon, Button, Group, Input, ScrollArea } from "@mantine/core"
+import { useState } from "react"
+import { BiSearch } from "react-icons/bi"
+import { TbSettings } from "react-icons/tb"
 
 import { ScreenBox } from "~components/screen-box"
 import { TemplatesList } from "~components/templates-list"
 import { useNavigation } from "~contexts/navigation-context"
+import { useTemplates } from "~hooks/use-templates"
 import { Screen } from "~types/ScreenType"
+import type { Template } from "~types/Template"
+
+function filterData<T>(data: T[], search: string, getter: (item: T) => string) {
+  const query = search.toLowerCase().trim()
+
+  return data.filter((item) => getter(item).toLowerCase().includes(query))
+}
 
 export const MainScreen = () => {
   const { push } = useNavigation()
+  const { templates, remove } = useTemplates()
+  const [filter, setFilter] = useState("")
 
   return (
     <ScreenBox
       navigationActions={
-        <ActionIcon
-          color="primary"
-          variant="light"
-          onClick={() => {
-            push(Screen.Settings)
-          }}>
-          <svg
-            stroke="currentColor"
-            fill="none"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            height="1em"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg">
-            <desc></desc>
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-        </ActionIcon>
+        <Group style={{ width: "100%" }}>
+          <Input
+            size="xs"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder="Filter"
+            rightSection={<BiSearch />}
+            style={{
+              flexGrow: 1
+            }}
+          />
+          <ActionIcon
+            color="primary"
+            variant="light"
+            onClick={() => {
+              push(Screen.Settings)
+            }}>
+            <TbSettings />
+          </ActionIcon>
+        </Group>
       }
       bottomActions={
         <Button
@@ -44,9 +55,17 @@ export const MainScreen = () => {
           Create Template
         </Button>
       }>
-      <Stack>
-        <TemplatesList />
-      </Stack>
+      <ScrollArea.Autosize offsetScrollbars scrollbarSize={10} maxHeight={240}>
+        <TemplatesList
+          onClick={(template) => push(Screen.TemplateForm, template)}
+          onRemove={remove}
+          templates={filterData<Template>(
+            templates,
+            filter,
+            (template) => template.name
+          )}
+        />
+      </ScrollArea.Autosize>
     </ScreenBox>
   )
 }

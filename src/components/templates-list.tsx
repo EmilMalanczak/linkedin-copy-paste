@@ -11,13 +11,16 @@ import { BsCheck } from "react-icons/bs"
 import { FiChevronRight } from "react-icons/fi"
 import { HiOutlineDuplicate, HiOutlineTrash } from "react-icons/hi"
 
-import { useNavigation } from "~contexts/navigation-context"
-import { useTemplates } from "~hooks/use-templates"
-import { Screen } from "~types/ScreenType"
+import type { Template } from "~types/Template"
 
-export const TemplatesList = () => {
-  const { templates, remove } = useTemplates()
-  const { push } = useNavigation()
+type Props = {
+  onClick: (data: Template) => void
+  onRemove: (id: string) => void
+  templates: Template[]
+}
+
+export const TemplatesList = ({ templates, onClick, onRemove }: Props) => {
+  console.log(templates)
 
   return (
     <Table verticalSpacing={8} horizontalSpacing={4}>
@@ -32,7 +35,7 @@ export const TemplatesList = () => {
                   cursor: "pointer"
                 }}
                 onClick={() => {
-                  push(Screen.TemplateForm, template)
+                  onClick(template)
                 }}>
                 <td style={{ width: "100%" }}>
                   <div>
@@ -72,7 +75,7 @@ export const TemplatesList = () => {
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation()
-                        remove(id)
+                        onRemove(id)
                       }}>
                       <HiOutlineTrash />
                     </ActionIcon>

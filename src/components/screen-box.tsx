@@ -27,7 +27,7 @@ export const ScreenBox = ({
 
   return (
     <Stack>
-      <Group position="apart">
+      <Group position="apart" noWrap spacing={8}>
         <Group
           spacing={4}
           align="center"
