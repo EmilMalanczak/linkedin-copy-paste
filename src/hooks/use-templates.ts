@@ -18,9 +18,25 @@ export const useTemplates = () => {
     rerender()
   }
 
+  const handleRemoveTemplate = (id: string) => {
+    setTemplates(templates.filter((template) => template.id !== id))
+    rerender()
+  }
+
+  const handlEditTemplate = (id: string, updatedTemplate: Template) => {
+    setTemplates(
+      templates.map((template) =>
+        template.id === id ? updatedTemplate : template
+      )
+    )
+    rerender()
+  }
+
   return {
     templates,
     add: handleAddTemplate,
-    clear: handleRemoveAllTemplates
+    clear: handleRemoveAllTemplates,
+    remove: handleRemoveTemplate,
+    edit: handlEditTemplate
   }
 }

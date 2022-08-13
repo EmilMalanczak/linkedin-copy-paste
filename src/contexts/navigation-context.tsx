@@ -3,13 +3,14 @@ import { createContext, useContext, useState } from "react"
 import { Screen } from "~types/ScreenType"
 
 type ScreenType = {
-  active: Screen
-  history: Screen[]
+  type: Screen
+  data: any
 }
 
 type NavigationContextType = {
-  screen: ScreenType
-  push: (screen: Screen) => void
+  active: ScreenType
+  history: ScreenType[]
+  push: (pushedScreen: Screen, data?: any) => void
   back: () => void
 }
 
@@ -19,35 +20,44 @@ const NavigationContext = createContext<NavigationContextType>(
 
 export const useNavigation = () => useContext(NavigationContext)
 
+const initialScreen = {
+  type: Screen.Main,
+  data: null
+}
+
 export const NavigationProvider = ({ children }) => {
-  const [screen, setScreen] = useState({
-    active: Screen.Main,
-    history: [Screen.Main]
+  const [{ active, history }, setScreen] = useState({
+    active: initialScreen,
+    history: [initialScreen]
   })
 
-  const push = (newScreen: Screen) => {
+  const push = (pushedScreen: Screen, data: any = null) => {
+    const newScreen = {
+      type: pushedScreen,
+      data
+    }
     setScreen({
       active: newScreen,
-      history: [...screen.history, newScreen]
+      history: [...history, newScreen]
     })
   }
 
   const back = () => {
-    if (screen.history.length > 1) {
-      const history = [...screen.history]
-      history.pop()
+    if (history.length > 1) {
+      const historyCopy = [...history]
+      historyCopy.pop()
 
-      const [newScreen] = history.slice(-1)
+      const [newScreen] = historyCopy.slice(-1)
 
       setScreen({
         active: newScreen,
-        history
+        history: historyCopy
       })
     }
   }
 
   return (
-    <NavigationContext.Provider value={{ screen, back, push }}>
+    <NavigationContext.Provider value={{ active, history, back, push }}>
       {children}
     </NavigationContext.Provider>
   )

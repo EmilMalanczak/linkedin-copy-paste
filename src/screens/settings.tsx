@@ -1,4 +1,4 @@
-import { InputWrapper } from "@mantine/core"
+import { Input } from "@mantine/core"
 import React from "react"
 
 import { ThemeColorSelect } from "~components/color-select"
@@ -8,13 +8,13 @@ import { ThemeSelect } from "~components/theme.select"
 export const SettingsScreen = () => {
   return (
     <ScreenBox>
-      <InputWrapper label="Primary color">
+      <Input.Wrapper label="Primary color">
         <ThemeColorSelect />
-      </InputWrapper>
+      </Input.Wrapper>
 
-      <InputWrapper label="Theme">
+      <Input.Wrapper label="Theme">
         <ThemeSelect />
-      </InputWrapper>
+      </Input.Wrapper>
     </ScreenBox>
   )
 }

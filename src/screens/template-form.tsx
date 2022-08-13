@@ -7,9 +7,11 @@ import { ScreenBox } from "~components/screen-box"
 import { useNavigation } from "~contexts/navigation-context"
 import { useTemplates } from "~hooks/use-templates"
 
-export const CreateTemplateScreen = () => {
-  const { back } = useNavigation()
-  const { add, clear } = useTemplates()
+export const TemplateFormScreen = () => {
+  const { back, active } = useNavigation()
+  const { add, edit } = useTemplates()
+
+  const isEditingMode = active.data !== null
 
   const form = useForm({
     initialValues: {
@@ -27,6 +29,14 @@ export const CreateTemplateScreen = () => {
     name,
     content
   }) => {
+    if (isEditingMode) {
+      const { id } = active.data
+      edit(id, {
+        id,
+        name,
+        content
+      })
+    }
     add({
       name,
       content,

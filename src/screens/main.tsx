@@ -13,7 +13,7 @@ export const MainScreen = () => {
       navigationActions={
         <ActionIcon
           color="primary"
-          variant="hover"
+          variant="light"
           onClick={() => {
             push(Screen.Settings)
           }}>
@@ -39,7 +39,7 @@ export const MainScreen = () => {
           size="xs"
           variant="light"
           onClick={() => {
-            push(Screen.CreateTemplate)
+            push(Screen.TemplateForm)
           }}>
           Create Template
         </Button>

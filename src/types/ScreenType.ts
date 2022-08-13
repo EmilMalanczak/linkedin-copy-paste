@@ -1,5 +1,5 @@
 export enum Screen {
   Main = "main",
-  CreateTemplate = "create-template",
+  TemplateForm = "template-form",
   Settings = "settings"
 }

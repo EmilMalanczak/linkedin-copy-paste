@@ -1,91 +1,90 @@
 import {
   ActionIcon,
-  Avatar,
+  Box,
+  CopyButton,
   Group,
-  Stack,
   Table,
   Text,
-  UnstyledButton
+  Tooltip
 } from "@mantine/core"
-import { useClipboard } from "@mantine/hooks"
+import { BsCheck } from "react-icons/bs"
+import { FiChevronRight } from "react-icons/fi"
+import { HiOutlineDuplicate, HiOutlineTrash } from "react-icons/hi"
 
 import { useNavigation } from "~contexts/navigation-context"
 import { useTemplates } from "~hooks/use-templates"
+import { Screen } from "~types/ScreenType"
 
 export const TemplatesList = () => {
-  const { templates } = useTemplates()
+  const { templates, remove } = useTemplates()
   const { push } = useNavigation()
-  const { copy } = useClipboard()
 
   return (
     <Table verticalSpacing={8} horizontalSpacing={4}>
       {templates.length > 0 ? (
         <tbody>
-          {templates.map(({ name, content }) => (
-            <tr>
-              <td>
-                <div>
-                  <Text size="sm" weight={500}>
-                    {name}
-                  </Text>
+          {templates.map((template) => {
+            const { name, content, id } = template
 
-                  <Text color="dimmed" lineClamp={1} size="xs">
-                    {content}
-                  </Text>
-                </div>
-              </td>
+            return (
+              <tr
+                style={{
+                  cursor: "pointer"
+                }}
+                onClick={() => {
+                  push(Screen.TemplateForm, template)
+                }}>
+                <td style={{ width: "100%" }}>
+                  <div>
+                    <Text size="sm" weight={500}>
+                      {name}
+                    </Text>
 
-              <td>
-                <Group spacing={4} noWrap>
-                  <ActionIcon
-                    size="sm"
-                    color="primary"
-                    onClick={() => copy(content)}>
-                    <svg
-                      stroke="currentColor"
-                      fill="currentColor"
-                      strokeWidth="0"
-                      viewBox="0 0 24 24"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path fill="none" d="M0 0h24v24H0V0z"></path>
-                      <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path>
-                    </svg>
-                  </ActionIcon>
-                  <ActionIcon color="primary" size="sm">
-                    <svg
-                      stroke="currentColor"
-                      fill="none"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                  </ActionIcon>
-                  <ActionIcon color="red" size="sm">
-                    <svg
-                      stroke="currentColor"
-                      fill="none"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                  </ActionIcon>
-                </Group>
-              </td>
-              {/* </UnstyledButton> */}
-            </tr>
-          ))}
+                    <Text color="dimmed" lineClamp={1} size="xs">
+                      {content}
+                    </Text>
+                  </div>
+                </td>
+
+                <td>
+                  <Group spacing={4} noWrap>
+                    <CopyButton value={content} timeout={2000}>
+                      {({ copied, copy }) => (
+                        <Tooltip
+                          label={copied ? "Copied" : "Copy"}
+                          withArrow
+                          position="bottom">
+                          <ActionIcon
+                            size="sm"
+                            color={copied ? "teal" : "gray"}
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              copy()
+                            }}>
+                            {copied ? <BsCheck /> : <HiOutlineDuplicate />}
+                          </ActionIcon>
+                        </Tooltip>
+                      )}
+                    </CopyButton>
+
+                    <ActionIcon
+                      color="red"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        remove(id)
+                      }}>
+                      <HiOutlineTrash />
+                    </ActionIcon>
+
+                    <ActionIcon color="gray" size="sm">
+                      <FiChevronRight />
+                    </ActionIcon>
+                  </Group>
+                </td>
+              </tr>
+            )
+          })}
         </tbody>
       ) : (
         <Text size="sm" align="center">
