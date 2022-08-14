@@ -1,4 +1,11 @@
-import { ActionIcon, Button, Group, Input, ScrollArea } from "@mantine/core"
+import {
+  ActionIcon,
+  Box,
+  Button,
+  Group,
+  Input,
+  ScrollArea
+} from "@mantine/core"
 import { useState } from "react"
 import { BiSearch } from "react-icons/bi"
 import { TbSettings } from "react-icons/tb"

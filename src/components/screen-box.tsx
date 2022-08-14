@@ -1,8 +1,9 @@
-import { ActionIcon, Box, Center, Group, Stack } from "@mantine/core"
+import { ActionIcon, Group, Stack } from "@mantine/core"
 import type { ReactNode } from "react"
-import { FaLinkedinIn } from "react-icons/fa"
 
 import { useNavigation } from "~contexts/navigation-context"
+
+import { Logo } from "./logo"
 
 type Props = {
   children: ReactNode
@@ -57,15 +58,7 @@ export const ScreenBox = ({
             </ActionIcon>
           )}
 
-          <Center
-            style={{
-              backgroundColor: "currentColor",
-              borderRadius: 3,
-              width: 28,
-              height: 28
-            }}>
-            <FaLinkedinIn color="#fff" size="1.25em" />
-          </Center>
+          <Logo size={28} />
         </Group>
         {navigationActions}
       </Group>

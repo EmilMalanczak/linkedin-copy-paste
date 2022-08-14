@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@emotion/cache': ^11.10.1
   '@emotion/react': ^11.10.0
   '@emotion/server': ^11.10.0
   '@mantine/core': ^5.1.5
@@ -19,10 +20,13 @@ specifiers:
   prettier: 2.6.2
   react: 18.1.0
   react-dom: 18.1.0
+  react-draggable: ^4.4.5
   react-icons: ^4.4.0
   typescript: 4.7.3
+  use-debounce: ^8.0.3
 
 dependencies:
+  '@emotion/cache': 11.10.1
   '@emotion/react': 11.10.0_3vam7ai7igquv5ohd333ufgzdq
   '@emotion/server': 11.10.0
   '@mantine/core': 5.1.5_6uvonv2hnl4mnjjy6tiok7yx6q
@@ -34,7 +38,9 @@ dependencies:
   nanoid: 4.0.0
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
+  react-draggable: 4.4.5_ef5jwxihqo6n7gxfmzogljlgcm
   react-icons: 4.4.0_react@18.1.0
+  use-debounce: 8.0.3_react@18.1.0
 
 devDependencies:
   '@trivago/prettier-plugin-sort-imports': 3.2.0_prettier@2.6.2
@@ -3967,6 +3973,14 @@ packages:
     engines: {node: '>= 0.6.0'}
     dev: true
 
+  /prop-types/15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+    dev: false
+
   /prr/1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
     dev: true
@@ -4028,6 +4042,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.1.0
       scheduler: 0.22.0
+
+  /react-draggable/4.4.5_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-OMHzJdyJbYTZo4uQE393fHcqqPYsEtkjfMgvCHr6rejT+Ezn4OZbNyGH50vv+SunC1RMvwOTSWkEODQLzw1M9g==}
+    peerDependencies:
+      react: '>= 16.3.0'
+      react-dom: '>= 16.3.0'
+    dependencies:
+      clsx: 1.1.1
+      prop-types: 15.8.1
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+    dev: false
 
   /react-error-overlay/6.0.9:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==}
@@ -4525,6 +4551,15 @@ packages:
     resolution: {integrity: sha512-GLMG0Jc/jiKov/3Ulid1wbv3r54K9HlMW29IWcDFPEqFkSO2nS0MuefWgMJpeHQ9YJeXDL3ZUF+P3jdXlZX/cQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.1.0
+    dev: false
+
+  /use-debounce/8.0.3_react@18.1.0:
+    resolution: {integrity: sha512-BV7xuVy4LS0HtzHb23sDwAjfNjdBWlc4oyjJLcdCoVAjPv1+hroZYsCXX4VfRJT+8sLaqCftBOO8l7CMQtn9Gw==}
+    engines: {node: '>= 10.0.0'}
+    peerDependencies:
+      react: '>=16.8.0'
     dependencies:
       react: 18.1.0
     dev: false

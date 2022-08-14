@@ -15,8 +15,8 @@ export const TemplateFormScreen = () => {
 
   const form = useForm({
     initialValues: {
-      name: "",
-      content: ""
+      name: active.data?.name || "",
+      content: active.data?.content || ""
     },
 
     validate: {

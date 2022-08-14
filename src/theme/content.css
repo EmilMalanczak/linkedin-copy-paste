@@ -1,0 +1,7 @@
+#plasmo-shadow-container {
+  z-index: 99999;
+}
+
+#plasmo-mount-container {
+  background: blue;
+}
