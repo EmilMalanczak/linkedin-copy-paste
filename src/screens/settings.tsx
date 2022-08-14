@@ -1,9 +1,9 @@
 import { Input } from "@mantine/core"
 import React from "react"
 
-import { ThemeColorSelect } from "~components/color-select"
+import { ThemeColorSelect } from "~components/theme-color-select"
 import { ScreenBox } from "~components/screen-box"
-import { ThemeSelect } from "~components/theme.select"
+import { ThemeSelect } from "~components/theme-select"
 
 export const SettingsScreen = () => {
   return (

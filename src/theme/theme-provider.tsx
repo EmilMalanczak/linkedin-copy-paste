@@ -1,4 +1,3 @@
-import { Global, css } from "@emotion/react"
 import { useForceUpdate } from "@mantine/hooks"
 import {
   ColorScheme,
@@ -6,7 +5,7 @@ import {
   MantineColor,
   MantineProvider
 } from "@mantine/styles"
-import React, { createContext, useContext } from "react"
+import React, { ReactNode, createContext, useContext } from "react"
 
 import { useStorage } from "@plasmohq/storage"
 
@@ -15,6 +14,10 @@ type ThemeContextType = {
   setTheme: (theme: ColorScheme) => void
   primaryColor: MantineColor
   setPrimaryColor: (color: MantineColor) => void
+}
+
+type Props = {
+  children: ReactNode
   cache?: EmotionCache
 }
 
@@ -22,7 +25,7 @@ const ThemeContext = createContext<ThemeContextType>({} as ThemeContextType)
 
 export const useTheme = () => useContext(ThemeContext)
 
-export const ThemeProvider = ({ children, cache }) => {
+export const ThemeProvider = ({ children, cache }: Props) => {
   const [theme, setTheme] = useStorage<ColorScheme>("theme", "light")
   const [color, setColor] = useStorage<MantineColor>("primary-color", "blue")
 
