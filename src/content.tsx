@@ -39,8 +39,6 @@ const styleCache = createCache({
 
 export const getStyle = () => styleElement
 
-export const getMountPoint = async () => document.querySelector("body")
-
 export default () => {
   const { templates } = useTemplates()
 
