@@ -71,7 +71,7 @@ export default function LinkedInTemplatePickerCsui() {
     }
   }, 240)
 
-  const handleContentDrag = (e, { x, y }) => {
+  const handleContentDrag = (_, { x, y }) => {
     setDragging(true)
     setOffset({
       x,
