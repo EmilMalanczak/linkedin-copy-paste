@@ -7,7 +7,7 @@ import {
 } from "@mantine/styles"
 import React, { ReactNode, createContext, useContext } from "react"
 
-import { useStorage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
 
 type ThemeContextType = {
   theme: ColorScheme
