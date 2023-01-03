@@ -1,4 +1,4 @@
 export const getPlasmoWrapper = (): HTMLElement =>
   document
-    .querySelector("div")
+    .querySelector("plasmo-csui")
     .shadowRoot.getElementById("plasmo-shadow-container")

@@ -1,6 +1,6 @@
 import { useForceUpdate } from "@mantine/hooks"
 
-import { useStorage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
 
 import type { Template } from "~types/Template"
 

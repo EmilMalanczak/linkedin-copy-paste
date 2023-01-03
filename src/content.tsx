@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import Draggable from "react-draggable"
 import { useDebouncedCallback } from "use-debounce"
 
-import { useStorage } from "@plasmohq/storage"
+import { useStorage } from "@plasmohq/storage/hook"
 
 import { ContentBubble } from "~components/content-bubble"
 import { TemplatesList } from "~components/templates-list"
@@ -32,27 +32,25 @@ export const getShadowHostId = () => SHADOW_ROOT_ID
 const styleElement = document.createElement("style")
 
 const styleCache = createCache({
-  key: "plasmo-emotion-cache",
+  key: "linkedin-copy-paste-csui",
   prepend: true,
   container: styleElement
 })
 
 export const getStyle = () => styleElement
 
-export default () => {
+export default function LinkedInTemplatePickerCsui() {
+  const [isFocused, setIsFocused] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [dragging, setDragging] = useState(false)
   const { templates } = useTemplates()
+  const [opened, { close, open, toggle }] = useDisclosure(false)
 
   const [offset, setOffset] = useStorage<DragCords>("content-offset", {
     x: 0,
     y: 0
   })
   const focusedElement = useRef<HTMLElement | null>(null)
-
-  const [isFocused, setIsFocused] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const [opened, { close, open, toggle }] = useDisclosure(false)
-
-  const [dragging, setDragging] = useState(false)
   const [bounds, setBounds] = useState<Partial<DOMRect>>({
     top: 0,
     left: 0,
@@ -71,9 +69,9 @@ export default () => {
       setIsFocused(true)
       setVisible(true)
     }
-  }, 1)
+  }, 240)
 
-  const handleContentDrag = (_, { x, y }) => {
+  const handleContentDrag = (e, { x, y }) => {
     setDragging(true)
     setOffset({
       x,
@@ -134,38 +132,41 @@ export default () => {
             defaultPosition={offset}
             position={null}
             scale={1}
+            offsetParent={document.body}
             onDrag={handleContentDrag}
             onStop={handleContentDragStop}>
-            <Popover
-              width={240}
-              position="right-end"
-              withArrow
-              shadow="md"
-              closeOnClickOutside
-              closeOnEscape
-              positionDependencies={[bounds]}
-              opened={opened}
-              onOpen={open}
-              onClose={close}>
-              <Popover.Target>
-                <ContentBubble onClick={toggle} active={dragging} />
-              </Popover.Target>
-              <Popover.Dropdown>
-                <Group position="apart" noWrap>
-                  <Title order={4}>Choose a template</Title>
-                  <CloseButton onClick={close} />
-                </Group>
-                <ScrollArea.Autosize
-                  offsetScrollbars
-                  scrollbarSize={10}
-                  maxHeight={240}>
-                  <TemplatesList
-                    templates={templates}
-                    onCopy={handleCopyTemplate}
-                  />
-                </ScrollArea.Autosize>
-              </Popover.Dropdown>
-            </Popover>
+            <span style={{ position: "absolute" }}>
+              <Popover
+                width={240}
+                position="right-end"
+                withArrow
+                shadow="md"
+                closeOnClickOutside
+                closeOnEscape
+                positionDependencies={[bounds]}
+                opened={opened}
+                onOpen={open}
+                onClose={close}>
+                <Popover.Target>
+                  <ContentBubble onClick={toggle} active={dragging} />
+                </Popover.Target>
+                <Popover.Dropdown>
+                  <Group position="apart" noWrap>
+                    <Title order={4}>Choose a template</Title>
+                    <CloseButton onClick={close} />
+                  </Group>
+                  <ScrollArea.Autosize
+                    offsetScrollbars
+                    scrollbarSize={10}
+                    maxHeight={240}>
+                    <TemplatesList
+                      templates={templates}
+                      onCopy={handleCopyTemplate}
+                    />
+                  </ScrollArea.Autosize>
+                </Popover.Dropdown>
+              </Popover>
+            </span>
           </Draggable>
         </span>
       )}
